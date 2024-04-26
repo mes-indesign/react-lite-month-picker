@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import styles from './MonthInput.module.css';
-import '../global.css';
+import styles from './MonthInput.module.scss';
+import '../global.scss';
 
-export function MonthInput(props) {
+export function MonthInput(props: any) {
   useEffect(() => {
-    const r = document.querySelector(':root');
+    const r = document.querySelector(':root') as any;
     if (props.bgColor) {
       r.style.setProperty('--input-bg-color', props.bgColor);
     }
@@ -26,7 +26,7 @@ export function MonthInput(props) {
       className={styles.monthInputField}
       onClick={() => props.setShowMonthPicker(!props.showMonthPicker)}
     >
-      {props.selected.monthName ??
+      {(typeof props.selected.monthName === 'string') ? props.selected.monthName :
         new Date().toLocaleString(props.lang, { month: 'long' })}{' '}
       {props.selected.year}
       <svg

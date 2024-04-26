@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import styles from './MonthPicker.module.css';
-import '../global.css';
+import styles from './MonthPicker.module.scss';
+import '../global.scss';
 
-export function MonthPicker(props) {
+export function MonthPicker(props: any) {
   const [month, setMonth] = useState(
     props.selected.month ? props.selected.month - 1 : new Date().getMonth()
   );
   const [year, setYear] = useState(
-    props.selected.year ?? new Date().getFullYear()
+    (typeof props.selected.year === 'number') ? props.selected.year : new Date().getFullYear()
   );
 
-  const setActiveMonthBgColor = (r, color) => {
+  const setActiveMonthBgColor = (r: any, color: any) => {
     r.style.setProperty('--month-active-bg-color', color);
   };
 
   useEffect(() => {
-    const r = document.querySelector(':root');
+    const r = document.querySelector(':root') as any;
     if (props.bgColorMonthActive) {
       setActiveMonthBgColor(r, props.bgColorMonthActive);
     }
@@ -40,13 +40,13 @@ export function MonthPicker(props) {
     }
   }, []);
 
-  const changeYear = (year) => {
+  const changeYear = (year: any) => {
     setYear(year);
   };
 
   const getMonthNames = (locale = 'en', format = 'short') => {
     const formatter = new Intl.DateTimeFormat(locale, {
-      month: format,
+      month: format as any,
       timeZone: 'UTC',
     });
     const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((month) => {
@@ -56,7 +56,7 @@ export function MonthPicker(props) {
     return months.map((date) => formatter.format(date));
   };
 
-  const changeMonth = (month) => {
+  const changeMonth = (month: any) => {
     setMonth(month);
     props.setIsOpen(false);
     props.onChange({
